@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "180191839836",
+    "project_id": "promp-flutter-final-71b86",
+    "storage_bucket": "promp-flutter-final-71b86.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:180191839836:android:099350c6c7cce4b7e7c899",
+        "android_client_info": {
+          "package_name": "com.example.promp_flutter_final"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "180191839836-l8r98u66sgo1de5rd94i4eikmrhgs1cp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbsAcHlbg__ehdkC8VnR-cOZX2n8KFBJE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "180191839836-l8r98u66sgo1de5rd94i4eikmrhgs1cp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

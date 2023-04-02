@@ -55,6 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  bool click = false;
   @override
   Widget build(BuildContext context) {
     User? currentUser = _service.user;
@@ -82,6 +83,8 @@ class _MyHomePageState extends State<MyHomePage> {
               Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => LoginScreen()),
                   (route) => false);
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("You've been logged out")));
             },
           )
         ],
@@ -90,7 +93,8 @@ class _MyHomePageState extends State<MyHomePage> {
         stream: FirebaseFirestore.instance.collection("note").snapshots(),
         builder: ((context, snapshot) {
           final dataDocuments = snapshot.data?.docs;
-          if (dataDocuments == null) return const Text("Your Reminder");
+          if (dataDocuments == null)
+            return const Text("Your Reminder supposed to be here.");
           return ListView.builder(
             itemCount: dataDocuments.length,
             itemBuilder: (context, index) {
@@ -106,11 +110,10 @@ class _MyHomePageState extends State<MyHomePage> {
                               Text(dataDocuments[index]["desc"].toString()),
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            IconButton(
-                                onPressed: _incrementCounter,
-                                icon: Icon(Icons.check, color: Colors.green)),
+                            Text("Last modified: " +
+                                dataDocuments[index]["dtadd"].toString()),
                             IconButton(
                                 onPressed: () => _editNote(
                                     dataDocuments[index].id,
@@ -121,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   color: Colors.black,
                                 )),
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -145,11 +148,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _editNote(String noteid, String noteName, String noteDesc) {
-    // print(noteid);
     Navigator.push(
         context as BuildContext,
         MaterialPageRoute(
             builder: (context) => EditPage(
-                noteid: noteid, noteName: noteName, noteDesc: noteDesc)));
+                  noteid: noteid,
+                  noteName: noteName,
+                  noteDesc: noteDesc,
+                )));
   }
 }

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.promp_flutter_final">
    <application
-        android:label="promp_flutter_final"
+        android:label="Reminder App by Prompiriya"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

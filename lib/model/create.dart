@@ -12,6 +12,8 @@ class CreatePage extends StatefulWidget {
 class _CreatePageState extends State<CreatePage> {
   final _noteName = TextEditingController();
   final _noteDesc = TextEditingController();
+  final _noteDTAdd = TextEditingController();
+  String dtAdd = DateTime.now().toString();
 
   final NoteService _noteService = NoteService();
 
@@ -57,6 +59,10 @@ class _CreatePageState extends State<CreatePage> {
   }
 
   _createNote() {
-    _noteService.addNotetoDB({"name": _noteName.text, "desc": _noteDesc.text});
+    _noteService.addNotetoDB({
+      "dtadd": _noteDTAdd.text,
+      "name": _noteName.text,
+      "desc": _noteDesc.text
+    });
   }
 }

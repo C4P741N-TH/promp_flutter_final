@@ -36,7 +36,6 @@ class _EditPageState extends State<EditPage> {
             TextField(
               controller: _noteName,
               decoration: const InputDecoration(label: Text("Note name")),
-              readOnly: false,
             ),
             TextField(
               controller: _noteDesc,

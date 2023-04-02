@@ -13,7 +13,7 @@ class NewAccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Create account"),
+          title: const Text("Create Account"),
         ),
         body: Padding(
           padding: const EdgeInsets.all(28.0),
@@ -21,12 +21,14 @@ class NewAccountScreen extends StatelessWidget {
             children: [
               TextField(
                   controller: _emailController,
-                  decoration: const InputDecoration(hintText: "Email")),
+                  decoration: const InputDecoration(
+                      hintText: "Email", icon: Icon(Icons.people))),
               const SizedBox(height: 10),
               TextField(
                   controller: _passwordController,
                   obscureText: true,
-                  decoration: const InputDecoration(hintText: "Password")),
+                  decoration: const InputDecoration(
+                      hintText: "Password", icon: Icon(Icons.lock))),
               const SizedBox(height: 20),
               ElevatedButton(
                   onPressed: () async {
@@ -41,7 +43,7 @@ class NewAccountScreen extends StatelessWidget {
                               builder: (context) => LoginScreen()));
                     }
                   },
-                  child: const Text("Create Account"))
+                  child: const Text("Create"))
             ],
           ),
         ));

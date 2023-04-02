@@ -20,26 +20,31 @@ class LoginScreen extends StatelessWidget {
             children: [
               TextField(
                   controller: _emailController,
-                  decoration: const InputDecoration(hintText: "Email")),
+                  decoration: const InputDecoration(
+                      hintText: "Email", icon: Icon(Icons.people))),
               const SizedBox(height: 10),
               TextField(
                   controller: _passwordController,
                   obscureText: true,
-                  decoration: const InputDecoration(hintText: "Password")),
+                  decoration: const InputDecoration(
+                      hintText: "Password", icon: Icon(Icons.lock))),
               const SizedBox(height: 20),
               ElevatedButton(
                   onPressed: () async {
                     bool res = await _service.login(
                         _emailController.text, _passwordController.text);
                     if (res) {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text("Successful")));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("You've been logged in")));
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) => MyHomePage(
                                     title: 'Reminder App',
                                   )));
+                    } else {
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(content: Text("Failed")));
                     }
                   },
                   child: const Text("Login")),
@@ -51,7 +56,10 @@ class LoginScreen extends StatelessWidget {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => NewAccountScreen()));
                 },
-                child: const Text("Don't have an account? Sign up here"),
+                child: const Text(
+                  "Create Account",
+                  style: TextStyle(color: Colors.red),
+                ),
               )
             ],
           ),

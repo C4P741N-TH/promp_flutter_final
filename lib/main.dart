@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:promp_flutter_final/model/create.dart';
 import 'package:promp_flutter_final/model/edit.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  MyHomePage({super.key, required this.title});
 
   final String title;
 
@@ -45,10 +46,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  List reminders = [
-    {"name": "Reminder 1", "date": "2023-04-02", "time": "22:30"},
-    {"name": "Reminder 2", "date": "2023-04-03", "time": "22:30"},
-  ];
+  // List reminders = [
+  //   {"name": "Reminder 1", "date": "2023-04-02", "time": "22:30"},
+  //   {"name": "Reminder 2", "date": "2023-04-03", "time": "22:30"},
+  // ];
 
   AuthService _service = AuthService();
 
@@ -89,51 +90,92 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ],
       )),
-      body: Center(
-          child: Expanded(
-              child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text("Your Reminder", style: TextStyle(fontSize: 30)),
-          Card(
-            child: Column(children: [
-              ListTile(
-                title: Text("Test"),
-                subtitle: Text("Test"),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  TextButton(
-                      onPressed: _incrementCounter,
-                      child: Icon(Icons.check, color: Colors.green)),
-                  IconButton(
-                      onPressed: _incrementCounter,
-                      icon: Icon(Icons.delete, color: Colors.red))
-                ],
-              )
-            ]),
-          )
-        ],
-      ))),
-      // body: StreamBuilder<QuerySnapshot>(
-      //   stream: FirebaseFirestore.instance.collection("note").snapshots(),
-      //   builder: ((context, snapshot) {
-      //     final dataDocuments = snapshot.data?.docs;
-      //     if (dataDocuments == null) return const Text("Your Reminder");
-      //     return ListView.builder(
-      //       itemCount: dataDocuments.length,
-      //       itemBuilder: (context, index) {
-      //         return ListTile(
-      //           title: Text(dataDocuments[index]["name"].toString()),
-      //           subtitle: Text(dataDocuments[index]["desc"].toString()),
-      //           onTap: () => _editNote(dataDocuments[index].id,
-      //               dataDocuments[index]["name"], dataDocuments[index]["desc"]),
-      //         );
-      //       },
-      //     );
-      //   }),
-      // ),
+      // body: Center(
+      //     child: Expanded(
+      //         child: Column(
+      //   mainAxisAlignment: MainAxisAlignment.center,
+      //   children: <Widget>[
+      //     Text("Your Reminder", style: TextStyle(fontSize: 30)),
+      //     Card(
+      //         child: Column(
+      //       children: reminders
+      //           .map((reminder) => Column(
+      //                 children: [
+      //                   ListTile(
+      //                     title: Text(reminder['name']),
+      //                     subtitle:
+      //                         Text(reminder['date'] + ' ' + reminder['time']),
+      //                   ),
+      //                   Row(
+      //                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      //                     children: [
+      //                       IconButton(
+      //                           onPressed: _incrementCounter,
+      //                           icon: Icon(Icons.check, color: Colors.green)),
+      //                       IconButton(
+      //                           onPressed: _incrementCounter,
+      //                           icon: Icon(Icons.delete, color: Colors.red)),
+      //                     ],
+      //                   ),
+      //                 ],
+      //               ))
+      //           .toList(),
+      //     ))
+      //   ],
+      // ))),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection("note").snapshots(),
+        builder: ((context, snapshot) {
+          final dataDocuments = snapshot.data?.docs;
+          if (dataDocuments == null) return const Text("Your Reminder");
+          return ListView.builder(
+            itemCount: dataDocuments.length,
+            itemBuilder: (context, index) {
+              return Center(
+                child: Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Card(
+                        child: Column(
+                          children: [
+                            ListTile(
+                              title:
+                                  Text(dataDocuments[index]["name"].toString()),
+                              subtitle:
+                                  Text(dataDocuments[index]["desc"].toString()),
+                              onTap: () => _editNote(
+                                  dataDocuments[index].id,
+                                  dataDocuments[index]["name"],
+                                  dataDocuments[index]["desc"]),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                IconButton(
+                                    onPressed: _incrementCounter,
+                                    icon:
+                                        Icon(Icons.check, color: Colors.green)),
+                                IconButton(
+                                    onPressed: () => _editNote(
+                                        dataDocuments[index].id,
+                                        dataDocuments[index]["name"],
+                                        dataDocuments[index]["desc"]),
+                                    icon: Icon(Icons.settings,
+                                        color: Colors.black)),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        }),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _createNote,
         tooltip: 'Create New Note',

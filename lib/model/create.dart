@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:promp_flutter_final/main.dart';
 import 'package:promp_flutter_final/service/note.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:provider/provider.dart';
 
 class CreatePage extends StatefulWidget {
@@ -26,11 +27,11 @@ class _CreatePageState extends State<CreatePage> {
           children: [
             TextField(
               controller: _noteName,
-              decoration: InputDecoration(label: Text("Note Title")),
+              decoration: InputDecoration(label: Text("Reminder Title")),
             ),
             TextField(
               controller: _noteDesc,
-              decoration: InputDecoration(label: Text("Note Description")),
+              decoration: InputDecoration(label: Text("Reminder Description")),
             ),
             const SizedBox(
               height: 20,

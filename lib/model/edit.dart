@@ -46,12 +46,20 @@ class _EditPageState extends State<EditPage> {
             const SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ElevatedButton(
-                  onPressed: _deleteNote, child: const Text("Delete")),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  onPressed: _deleteNote,
+                  icon: Icon(Icons.delete, color: Colors.red),
+                  iconSize: 50,
+                ),
+                IconButton(
+                    onPressed: _editNote,
+                    icon: Icon(Icons.save, color: Colors.green),
+                    iconSize: 50),
+              ],
             ),
-            ElevatedButton(onPressed: _editNote, child: const Text("Edit"))
           ],
         ),
       ),
@@ -64,6 +72,6 @@ class _EditPageState extends State<EditPage> {
   }
 
   void _deleteNote() {
-    _noteService.deleteNote(_noteName.text);
+    _noteService.deleteNote(widget.noteid);
   }
 }

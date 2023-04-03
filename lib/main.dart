@@ -90,7 +90,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       )),
       body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection("note").snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection(_service.user!.email.toString())
+            .snapshots(),
         builder: ((context, snapshot) {
           final dataDocuments = snapshot.data?.docs;
           if (dataDocuments == null)
